@@ -3,8 +3,3 @@
 *.pt
 *.pth
 pixel_classifiers
-
-*.npy
-*.jpg
-*.png
-*.npz
