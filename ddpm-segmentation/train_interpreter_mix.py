@@ -62,43 +62,48 @@ def prepare_data(args):
     return X[y != args['ignore_label']], y[y != args['ignore_label']]
 
 
-def evaluation(args, models):
+def evaluation(args, models, data_dir, num_images, tag=''):
     feature_extractor = create_feature_extractor(**args)
+
     dataset = ImageLabelDataset(
-        data_dir=args['testing_path'],
+        data_dir=data_dir,
         resolution=args['image_size'],
-        num_images=args['testing_number'],
-        transform=make_transform(
-            args['model_type'],
-            args['image_size']
-        )
+        num_images=num_images,
+        transform=make_transform(args['model_type'], args['image_size'])
     )
 
+    # Shared noise (optional, controlled by args)
     if 'share_noise' in args and args['share_noise']:
         rnd_gen = torch.Generator(device=dev()).manual_seed(args['seed'])
-        noise = torch.randn(1, 3, args['image_size'], args['image_size'], 
+        noise = torch.randn(1, 3, args['image_size'], args['image_size'],
                             generator=rnd_gen, device=dev())
     else:
-        noise = None 
+        noise = None
 
     preds, gts, uncertainty_scores = [], [], []
-    for img, label in tqdm(dataset):        
+
+    for img, label in tqdm(dataset, desc=f"Evaluating {tag}"):
         img = img[None].to(dev())
         features = feature_extractor(img, noise=noise)
         features = collect_features(args, features)
 
+        # Flatten features for classifier
         x = features.view(args['dim'][-1], -1).permute(1, 0)
-        pred, uncertainty_score = predict_labels(
-            models, x, size=args['dim'][:-1]
-        )
-        gts.append(label.numpy())
+        pred, uncertainty_score = predict_labels(models, x, size=args['dim'][:-1])
+
         preds.append(pred.numpy())
+        gts.append(label.numpy())
         uncertainty_scores.append(uncertainty_score.item())
-    
-    save_predictions(args, dataset.image_paths, preds)
+
+    # Save predictions with tag
+    save_predictions(args, dataset.image_paths, preds, tag=tag)
+
+    # Compute mIoU
     miou = compute_iou(args, preds, gts)
-    print(f'Overall mIoU: ', miou)
-    print(f'Mean uncertainty: {sum(uncertainty_scores) / len(uncertainty_scores)}')
+    mean_uncertainty = sum(uncertainty_scores) / len(uncertainty_scores)
+
+    print(f"[{tag}] Overall mIoU: {miou}")
+    print(f"[{tag}] Mean uncertainty: {mean_uncertainty}")
 
 
 # Adopted from https://github.com/nv-tlabs/datasetGAN_release/blob/d9564d4d2f338eaad78132192b865b6cc1e26cac/datasetGAN/train_interpreter.py#L434
@@ -204,4 +209,12 @@ if __name__ == '__main__':
     
     print('Loading pretrained models...')
     models = load_ensemble(opts, device='cuda')
-    evaluation(opts, models)
+    
+    if 'testing_paths' in opts and 'testing_numbers' in opts:
+        for tag, path in opts['testing_paths'].items():
+            num_images = opts['testing_numbers'][tag]
+            evaluation(opts, models, data_dir=path, num_images=num_images, tag=tag)
+    else:
+        # Fallback til enkelt datasæt (som før)
+        evaluation(opts, models, data_dir=opts['testing_path'], num_images=opts['testing_number'], tag='default')
+
