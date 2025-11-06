@@ -1,14 +1,18 @@
 #!/bin/bash
-# =======================================
-# UCloud init script for DDPM-segmentation
-# Installerer PyTorch og nødvendige pakker
-# =======================================
+# init.sh - Installerer Python-pakker til jobbet med --user
 
-# Opdater pip og installer de ønskede versioner
-pip install --upgrade pip
+# Opgrader pip først (valgfrit, men anbefales)
+python -m pip install --upgrade pip --user
 
-# Installer PyTorch + torchvision + torchaudio
-pip install torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1
+# Installer nødvendige pakker
+python -m pip install --upgrade --user \
+    torch==2.3.1 \
+    torchvision==0.18.1 \
+    torchaudio==2.3.1 \
+    blobfile==2.1.1 \
+    tqdm \
+    opencv-python-headless==4.12.0.88 \
+    timm \
+    mpi4py
 
-# Ekstra pakker til DDPM og databehandling
-pip install blobfile==2.1.1 tqdm opencv-python timm mpi4py pillow numpy
+echo "✅ Python-pakker installeret med --user"

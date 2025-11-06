@@ -5,9 +5,9 @@ MODEL_FLAGS="--attention_resolutions 32,16,8 --class_cond False --diffusion_step
 
 # Liste af JSON-filer for hvert eksperiment
 EXPERIMENTS=(
-    "/work/ddpm-segmentation/experiments/horse_21/ddpm_contrast_severity1.json"
-    "/work/ddpm-segmentation/experiments/horse_21/ddpm_contrast_severity3.json"
-    "/work/ddpm-segmentation/experiments/horse_21/ddpm_contrast_severity5.json"
+    "/work/ddpm-segmentation/experiments/horse_21/ddpm_speckle_noise_severity1.json"
+    "/work/ddpm-segmentation/experiments/horse_21/ddpm_speckle_noise_severity3.json"
+    "/work/ddpm-segmentation/experiments/horse_21/ddpm_speckle_noise_severity5.json"
 )
 
 for EXP in "${EXPERIMENTS[@]}"; do

@@ -1,0 +1,71 @@
+{
+    "exp_dir": "pixel_classifiers/horse_21/ddpm_corruption_mix_severity3",
+    "model_type": "ddpm",
+    
+    "category": "horse_21",
+    "number_class": 21,
+    "ignore_label": 255,
+  
+    "training_path": "ddpm-segmentation/datasets/ucloud_horse_21_mixed_exp/mixed_severity3_10pct_each/train",
+    "validation_path": "ddpm-segmentation/datasets/horse_21/ddpm",
+    "model_path": "ddpm-segmentation/checkpoints/ddpm/lsun_horse.pt",
+  
+    "dim": [256, 256, 8448],
+    "steps": [50, 150, 250],
+    "blocks": [5, 6, 7, 8, 12],
+  
+    "model_num": 1,
+    "batch_size": 64,
+    "max_training": 30,
+    
+    "training_number": 30,
+    "testing_number": 30,
+  
+    "upsample_mode": "bilinear",
+    "share_noise": true,
+    "input_activations": false,
+
+    "testing_paths": {
+        "clean": "ddpm-segmentation/datasets/horse_21/real/test",
+        "brightness_severity1": "ddpm-segmentation/datasets/ucloud horse_21 exp/brightness_severity1/test/",
+        "brightness_severity3": "ddpm-segmentation/datasets/ucloud horse_21 exp/brightness_severity3/test/",
+        "brightness_severity5": "ddpm-segmentation/datasets/ucloud horse_21 exp/brightness_severity5/test/",
+        "gaussian_noise_severity1": "ddpm-segmentation/datasets/ucloud horse_21 exp/gaussian_noise_severity1/test/",
+        "gaussian_noise_severity3": "ddpm-segmentation/datasets/ucloud horse_21 exp/gaussian_noise_severity3/test/",
+        "gaussian_noise_severity5": "ddpm-segmentation/datasets/ucloud horse_21 exp/gaussian_noise_severity5/test/",
+        "masked_severity1": "ddpm-segmentation/datasets/ucloud horse_21 exp/masked_severity1/test/",
+        "masked_severity3": "ddpm-segmentation/datasets/ucloud horse_21 exp/masked_severity3/test/",
+        "masked_severity5": "ddpm-segmentation/datasets/ucloud horse_21 exp/masked_severity5/test/",
+        "saturate_severity1": "ddpm-segmentation/datasets/ucloud horse_21 exp/saturate_severity1/test/",
+        "saturate_severity3": "ddpm-segmentation/datasets/ucloud horse_21 exp/saturate_severity3/test/",
+        "saturate_severity5": "ddpm-segmentation/datasets/ucloud horse_21 exp/saturate_severity5/test/",
+        "jpeg_compression_severity1": "ddpm-segmentation/datasets/ucloud horse_21 exp/jpeg_compression_severity1/test/",
+        "jpeg_compression_severity3": "ddpm-segmentation/datasets/ucloud horse_21 exp/jpeg_compression_severity3/test/",
+        "jpeg_compression_severity5": "ddpm-segmentation/datasets/ucloud horse_21 exp/jpeg_compression_severity5/test/",
+        "elastic_transform_severity1": "ddpm-segmentation/datasets/ucloud horse_21 exp/elastic_transform_severity1/test/",
+        "elastic_transform_severity3": "ddpm-segmentation/datasets/ucloud horse_21 exp/elastic_transform_severity3/test/",
+        "elastic_transform_severity5": "ddpm-segmentation/datasets/ucloud horse_21 exp/elastic_transform_severity5/test/"
+    },
+
+    "testing_numbers": {
+        "clean": 30,
+        "brightness_severity1": 30,
+        "brightness_severity3": 30,
+        "brightness_severity5": 30,
+        "gaussian_noise_severity1": 30,
+        "gaussian_noise_severity3": 30,
+        "gaussian_noise_severity5": 30,
+        "masked_severity1": 30,
+        "masked_severity3": 30,
+        "masked_severity5": 30,
+        "saturate_severity1": 30,
+        "saturate_severity3": 30,
+        "saturate_severity5": 30,
+        "jpeg_compression_severity1": 30,
+        "jpeg_compression_severity3": 30,
+        "jpeg_compression_severity5": 30,
+        "elastic_transform_severity1": 30,
+        "elastic_transform_severity3": 30,
+        "elastic_transform_severity5": 30
+    }
+}

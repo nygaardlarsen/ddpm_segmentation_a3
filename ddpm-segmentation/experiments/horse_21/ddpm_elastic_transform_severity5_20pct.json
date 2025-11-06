@@ -1,0 +1,40 @@
+{
+  "exp_dir": "pixel_classifiers/horse_21/ddpm_elastic_transform_severity5_20pct",
+  "model_type": "ddpm",
+  
+  "category": "horse_21",
+  "number_class": 21,
+  "ignore_label": 255,
+
+  "training_path": "ddpm-segmentation/datasets/ucloud_horse_21_mixed_exp/elastic_transform_severity5_20pct/train",
+  "validation_path": "ddpm-segmentation/datasets/horse_21/ddpm",
+  "model_path": "ddpm-segmentation/checkpoints/ddpm/lsun_horse.pt",
+
+  "dim": [256, 256, 8448],
+  "steps": [50, 150, 250],
+  "blocks": [5, 6, 7, 8, 12],
+
+  "model_num": 1,
+  "batch_size": 64,
+  "max_training": 30,
+
+  "training_number": 30,
+
+  "upsample_mode": "bilinear",
+  "share_noise": true,
+  "input_activations": false,
+
+  "testing_paths": {
+    "clean": "ddpm-segmentation/datasets/horse_21/real/test",
+    "severity_1": "ddpm-segmentation/datasets/ucloud horse_21 exp/elastic_transform_severity1/test/",
+    "severity_3": "ddpm-segmentation/datasets/ucloud horse_21 exp/elastic_transform_severity3/test/",
+    "severity_5": "ddpm-segmentation/datasets/ucloud horse_21 exp/elastic_transform_severity5/test/"
+  },
+
+  "testing_numbers": {
+    "clean": 30,
+    "severity_1": 30,
+    "severity_3": 30,
+    "severity_5": 30
+  }
+}
